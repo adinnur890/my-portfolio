@@ -74,25 +74,7 @@ export const Hero: React.FC = () => {
             </Button>
           </div>
 
-          {/* Social Links */}
-          <div className="hero-social">
-            {[
-              { Icon: FiGithub, href: personalInfo.social.github },
-              { Icon: FiLinkedin, href: personalInfo.social.linkedin },
-              { Icon: FiTwitter, href: personalInfo.social.twitter },
-              { Icon: FiMail, href: personalInfo.social.email }
-            ].map(({ Icon, href }, index) => (
-              <a
-                key={index}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-link"
-              >
-                <Icon size={20} />
-              </a>
-            ))}
-          </div>
+
         </div>
 
         {/* Avatar */}
