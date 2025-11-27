@@ -15,8 +15,8 @@ export const techStack = [
 ];
 
 export const achievements = [
-  { number: "50+", label: "Proyek Selesai" },
-  { number: "5+", label: "Tahun Pengalaman" },
-  { number: "20+", label: "Klien Puas" },
-  { number: "100%", label: "Tingkat Keberhasilan" }
+  { number: "60+", label: "Proyek Selesai" },
+  { number: "3+", label: "Tahun Pengalaman" },
+  { number: "50+", label: "Klien Puas" },
+  { number: "95%", label: "Tingkat Keberhasilan" }
 ];
