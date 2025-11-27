@@ -55,28 +55,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/adinnurdiansyah/hotel-booking",
     featured: true
   },
-  {
-    id: 5,
-    title: "Portfolio Developer Modern",
-    description: "Portfolio website dengan fitur glassmorphism design, dark/light mode toggle, scroll animations, project filtering, contact form validation, responsive layout, dan SEO optimization untuk showcase profesional.",
-    image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=400&h=250&fit=crop",
-    technologies: ["React", "TypeScript", "CSS", "Framer Motion"],
-    category: "Frontend",
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com/adinnurdiansyah/portfolio",
-    featured: true
-  },
-  {
-    id: 6,
-    title: "E-Learning Platform",
-    description: "Platform pembelajaran online dengan fitur video streaming, quiz interaktif, progress tracking, sertifikat digital, dan sistem pembayaran kursus yang terintegrasi.",
-    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=250&fit=crop",
-    technologies: ["Laravel", "Vue.js", "MySQL", "Redis"],
-    category: "Full Stack",
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com/adinnurdiansyah/elearning",
-    featured: true
-  }
+
 ];
 
 export const categories = ["Semua", "Frontend", "Full Stack"];
