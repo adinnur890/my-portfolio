@@ -1,6 +1,7 @@
 import React from 'react';
 import { FiHeart, FiCode, FiCoffee, FiMapPin } from 'react-icons/fi';
 import { personalInfo } from '../../data/personal';
+import VisitorCounter from '../UI/VisitorCounter';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -24,18 +25,17 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Quote */}
-        <div style={{ textAlign: 'center', maxWidth: '300px' }}>
+        {/* Visitor Counter */}
+        <div style={{ textAlign: 'center' }}>
+          <VisitorCounter />
           <p style={{ 
-            fontSize: '0.9rem', 
+            fontSize: '0.8rem', 
             fontStyle: 'italic', 
             color: 'var(--gray-600)', 
-            marginBottom: '0.5rem',
-            lineHeight: '1.4'
+            marginTop: '1rem'
           }}>
             "Code is like humor. When you have to explain it, it's bad."
           </p>
-          <p style={{ fontSize: '0.75rem', color: 'var(--gray-500)' }}>- Cory House</p>
         </div>
 
         {/* Copyright */}

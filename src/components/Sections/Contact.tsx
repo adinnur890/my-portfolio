@@ -5,6 +5,7 @@ import { Card } from '../UI/Card';
 import { Button } from '../UI/Button';
 import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 import { personalInfo } from '../../data/personal';
+import Confetti from '../UI/Confetti';
 
 interface FormData {
   name: string;
@@ -22,6 +23,7 @@ export const Contact: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
   const { ref, isVisible } = useScrollAnimation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -51,6 +53,7 @@ export const Contact: React.FC = () => {
       );
       
       setSubmitted(true);
+      setShowConfetti(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
       console.error('Error sending email:', error);
@@ -233,6 +236,11 @@ export const Contact: React.FC = () => {
           </div>
         </div>
       </div>
+      
+      <Confetti 
+        active={showConfetti} 
+        onComplete={() => setShowConfetti(false)} 
+      />
     </section>
   );
 };

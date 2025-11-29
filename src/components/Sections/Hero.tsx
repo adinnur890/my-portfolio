@@ -7,27 +7,31 @@ import { personalInfo } from '../../data/personal';
 export const Hero: React.FC = () => {
   const [displayText, setDisplayText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
-  const titles = ['Full Stack Developer', 'React Specialist', 'Problem Solver'];
+  const [isDeleting, setIsDeleting] = useState(false);
+  const titles = ['Full Stack Developer', 'React Specialist', 'Laravel Developer', 'Problem Solver'];
 
   useEffect(() => {
     const currentTitle = titles[currentIndex];
-    let charIndex = 0;
     
     const typeInterval = setInterval(() => {
-      if (charIndex < currentTitle.length) {
-        setDisplayText(currentTitle.slice(0, charIndex + 1));
-        charIndex++;
+      if (!isDeleting) {
+        if (displayText.length < currentTitle.length) {
+          setDisplayText(currentTitle.slice(0, displayText.length + 1));
+        } else {
+          setTimeout(() => setIsDeleting(true), 2000);
+        }
       } else {
-        clearInterval(typeInterval);
-        setTimeout(() => {
-          setDisplayText('');
+        if (displayText.length > 0) {
+          setDisplayText(displayText.slice(0, -1));
+        } else {
+          setIsDeleting(false);
           setCurrentIndex((prev) => (prev + 1) % titles.length);
-        }, 2000);
+        }
       }
-    }, 100);
+    }, isDeleting ? 50 : 100);
 
     return () => clearInterval(typeInterval);
-  }, [currentIndex]);
+  }, [displayText, currentIndex, isDeleting, titles]);
 
   return (
     <section id="home" className="hero">
@@ -53,8 +57,9 @@ export const Hero: React.FC = () => {
           </h1>
           
           <div className="hero-subtitle">
-            <span className="typing-text">
+            <span className="typing-text enhanced-typing">
               {displayText}
+              <span className="cursor-blink">|</span>
             </span>
           </div>
 
