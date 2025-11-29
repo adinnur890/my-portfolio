@@ -14,35 +14,13 @@ const LikeButton: React.FC<LikeButtonProps> = ({ projectId, initialLikes = 0 }) 
 
   useEffect(() => {
     const fetchLikes = async () => {
-      try {
-        // Get current likes from API
-        const response = await fetch(`https://api.countapi.xyz/get/portfolio-likes/project-${projectId}`);
-        const data = await response.json();
-        
-        if (data.value !== undefined) {
-          setLikes(data.value);
-        } else {
-          // Initialize with 0 likes
-          const initResponse = await fetch(`https://api.countapi.xyz/set/portfolio-likes/project-${projectId}?value=0`);
-          const initData = await initResponse.json();
-          setLikes(initData.value || 0);
-        }
-        
-        // Check if user already liked
-        const likedProjects = JSON.parse(localStorage.getItem('likedProjects') || '[]');
-        setIsLiked(likedProjects.includes(projectId));
-        
-      } catch (error) {
-        console.error('Error fetching likes:', error);
-        // Fallback to localStorage
-        const projectLikes = localStorage.getItem(`project_${projectId}_likes`);
-        const likedProjects = JSON.parse(localStorage.getItem('likedProjects') || '[]');
-        
-        setLikes(0); // Start from 0
-        setIsLiked(likedProjects.includes(projectId));
-      } finally {
-        setLoading(false);
-      }
+      // Use localStorage only for now
+      const projectLikes = localStorage.getItem(`project_${projectId}_likes`);
+      const likedProjects = JSON.parse(localStorage.getItem('likedProjects') || '[]');
+      
+      setLikes(projectLikes ? parseInt(projectLikes) : 0);
+      setIsLiked(likedProjects.includes(projectId));
+      setLoading(false);
     };
 
     fetchLikes();
@@ -53,52 +31,27 @@ const LikeButton: React.FC<LikeButtonProps> = ({ projectId, initialLikes = 0 }) 
     
     const likedProjects = JSON.parse(localStorage.getItem('likedProjects') || '[]');
     
-    try {
-      if (isLiked) {
-        // Unlike - decrease API counter
-        const response = await fetch(`https://api.countapi.xyz/hit/portfolio-likes/project-${projectId}?amount=-1`);
-        const data = await response.json();
-        
-        if (data.value !== undefined) {
-          setLikes(data.value);
-          const newLikedProjects = likedProjects.filter((id: number) => id !== projectId);
-          localStorage.setItem('likedProjects', JSON.stringify(newLikedProjects));
-          setIsLiked(false);
-        }
-      } else {
-        // Like - increase API counter
-        const response = await fetch(`https://api.countapi.xyz/hit/portfolio-likes/project-${projectId}`);
-        const data = await response.json();
-        
-        if (data.value !== undefined) {
-          setLikes(data.value);
-          likedProjects.push(projectId);
-          localStorage.setItem('likedProjects', JSON.stringify(likedProjects));
-          setIsLiked(true);
-          
-          // Trigger animation
-          setIsAnimating(true);
-          setTimeout(() => setIsAnimating(false), 600);
-        }
-      }
-    } catch (error) {
-      console.error('Error updating likes:', error);
-      // Fallback to localStorage only
-      if (isLiked) {
-        const newLikedProjects = likedProjects.filter((id: number) => id !== projectId);
-        localStorage.setItem('likedProjects', JSON.stringify(newLikedProjects));
-        setLikes(prev => prev - 1);
-        localStorage.setItem(`project_${projectId}_likes`, (likes - 1).toString());
-      } else {
-        likedProjects.push(projectId);
-        localStorage.setItem('likedProjects', JSON.stringify(likedProjects));
-        setLikes(prev => prev + 1);
-        localStorage.setItem(`project_${projectId}_likes`, (likes + 1).toString());
-        
-        setIsAnimating(true);
-        setTimeout(() => setIsAnimating(false), 600);
-      }
-      setIsLiked(!isLiked);
+    // Use localStorage only
+    if (isLiked) {
+      // Unlike
+      const newLikedProjects = likedProjects.filter((id: number) => id !== projectId);
+      localStorage.setItem('likedProjects', JSON.stringify(newLikedProjects));
+      const newLikes = likes - 1;
+      setLikes(newLikes);
+      localStorage.setItem(`project_${projectId}_likes`, newLikes.toString());
+      setIsLiked(false);
+    } else {
+      // Like
+      likedProjects.push(projectId);
+      localStorage.setItem('likedProjects', JSON.stringify(likedProjects));
+      const newLikes = likes + 1;
+      setLikes(newLikes);
+      localStorage.setItem(`project_${projectId}_likes`, newLikes.toString());
+      setIsLiked(true);
+      
+      // Trigger animation
+      setIsAnimating(true);
+      setTimeout(() => setIsAnimating(false), 600);
     }
   };
 

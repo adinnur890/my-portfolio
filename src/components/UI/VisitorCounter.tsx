@@ -7,38 +7,30 @@ const VisitorCounter: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchVisitorCount = async () => {
-      try {
-        // Using a free visitor counter API
-        const response = await fetch('https://api.countapi.xyz/hit/my-portfolio-adin/visits');
-        const data = await response.json();
-        
-        if (data.value) {
-          setVisitors(data.value);
-        }
-        
-        // Today's visits using different namespace
-        const today = new Date().toDateString().replace(/\s/g, '-');
-        const todayResponse = await fetch(`https://api.countapi.xyz/hit/my-portfolio-adin-daily/${today}`);
-        const todayData = await todayResponse.json();
-        
-        if (todayData.value) {
-          setTodayVisits(todayData.value);
-        }
-        
-      } catch (error) {
-        console.error('Error fetching visitor count:', error);
-        // Fallback to localStorage
-        const localVisitors = localStorage.getItem('fallbackVisitors') || '1';
-        const localToday = localStorage.getItem('fallbackToday') || '1';
-        setVisitors(parseInt(localVisitors));
-        setTodayVisits(parseInt(localToday));
-        
-        localStorage.setItem('fallbackVisitors', (parseInt(localVisitors) + 1).toString());
-        localStorage.setItem('fallbackToday', (parseInt(localToday) + 1).toString());
-      } finally {
-        setLoading(false);
+    const fetchVisitorCount = () => {
+      // Use localStorage only
+      const localVisitors = localStorage.getItem('totalVisitors') || '0';
+      const today = new Date().toDateString();
+      const lastVisit = localStorage.getItem('lastVisit');
+      
+      // Increment total visitors
+      const newVisitors = parseInt(localVisitors) + 1;
+      setVisitors(newVisitors);
+      localStorage.setItem('totalVisitors', newVisitors.toString());
+      
+      // Handle today's visits
+      if (lastVisit !== today) {
+        localStorage.setItem('todayVisits', '1');
+        localStorage.setItem('lastVisit', today);
+        setTodayVisits(1);
+      } else {
+        const todayCount = localStorage.getItem('todayVisits') || '0';
+        const newTodayCount = parseInt(todayCount) + 1;
+        localStorage.setItem('todayVisits', newTodayCount.toString());
+        setTodayVisits(newTodayCount);
       }
+      
+      setLoading(false);
     };
 
     fetchVisitorCount();
