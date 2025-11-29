@@ -7,68 +7,61 @@ interface LikeButtonProps {
 }
 
 const LikeButton: React.FC<LikeButtonProps> = ({ projectId, initialLikes = 0 }) => {
-  const [likes, setLikes] = useState(initialLikes);
+  const [likes, setLikes] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchLikes = async () => {
-      // Use localStorage only for now
-      const projectLikes = localStorage.getItem(`project_${projectId}_likes`);
+    try {
+      const savedLikes = localStorage.getItem(`project_${projectId}_likes`);
       const likedProjects = JSON.parse(localStorage.getItem('likedProjects') || '[]');
       
-      setLikes(projectLikes ? parseInt(projectLikes) : 0);
+      setLikes(savedLikes ? parseInt(savedLikes) : 0);
       setIsLiked(likedProjects.includes(projectId));
-      setLoading(false);
-    };
-
-    fetchLikes();
-  }, [projectId, initialLikes]);
-
-  const handleLike = async () => {
-    if (loading) return;
-    
-    const likedProjects = JSON.parse(localStorage.getItem('likedProjects') || '[]');
-    
-    // Use localStorage only
-    if (isLiked) {
-      // Unlike
-      const newLikedProjects = likedProjects.filter((id: number) => id !== projectId);
-      localStorage.setItem('likedProjects', JSON.stringify(newLikedProjects));
-      const newLikes = likes - 1;
-      setLikes(newLikes);
-      localStorage.setItem(`project_${projectId}_likes`, newLikes.toString());
+    } catch (error) {
+      console.log('Error loading likes:', error);
+      setLikes(0);
       setIsLiked(false);
-    } else {
-      // Like
-      likedProjects.push(projectId);
-      localStorage.setItem('likedProjects', JSON.stringify(likedProjects));
-      const newLikes = likes + 1;
-      setLikes(newLikes);
-      localStorage.setItem(`project_${projectId}_likes`, newLikes.toString());
-      setIsLiked(true);
+    }
+  }, [projectId]);
+
+  const handleLike = () => {
+    try {
+      const likedProjects = JSON.parse(localStorage.getItem('likedProjects') || '[]');
       
-      // Trigger animation
-      setIsAnimating(true);
-      setTimeout(() => setIsAnimating(false), 600);
+      if (isLiked) {
+        // Unlike
+        const newLikedProjects = likedProjects.filter((id: number) => id !== projectId);
+        localStorage.setItem('likedProjects', JSON.stringify(newLikedProjects));
+        const newLikes = Math.max(0, likes - 1);
+        setLikes(newLikes);
+        localStorage.setItem(`project_${projectId}_likes`, newLikes.toString());
+        setIsLiked(false);
+      } else {
+        // Like
+        if (!likedProjects.includes(projectId)) {
+          likedProjects.push(projectId);
+        }
+        localStorage.setItem('likedProjects', JSON.stringify(likedProjects));
+        const newLikes = likes + 1;
+        setLikes(newLikes);
+        localStorage.setItem(`project_${projectId}_likes`, newLikes.toString());
+        setIsLiked(true);
+        
+        // Animation
+        setIsAnimating(true);
+        setTimeout(() => setIsAnimating(false), 600);
+      }
+    } catch (error) {
+      console.log('Error saving likes:', error);
     }
   };
-
-  if (loading) {
-    return (
-      <button className="like-button">
-        <FaHeart className="heart-icon" />
-        <span className="like-count">...</span>
-      </button>
-    );
-  }
 
   return (
     <button
       onClick={handleLike}
       className={`like-button ${isLiked ? 'liked' : ''} ${isAnimating ? 'animating' : ''}`}
-      disabled={loading}
+      type="button"
     >
       <FaHeart className="heart-icon" />
       <span className="like-count">{likes}</span>

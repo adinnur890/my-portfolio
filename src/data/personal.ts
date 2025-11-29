@@ -7,6 +7,7 @@ export const personalInfo = {
   location: "Sukabumi, Indonesia",
   avatar: "/images/avatar.jpg",
   resume: "/resume.pdf",
+  deployUrl: "https://my-portfolio-adin.vercel.app",
   social: {
     github: "https://github.com/adinnurdiansyah",
     linkedin: "https://linkedin.com/in/adinnurdiansyah",

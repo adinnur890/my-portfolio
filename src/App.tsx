@@ -7,7 +7,7 @@ import { Services } from './components/Sections/Services';
 import { Projects } from './components/Sections/Projects';
 import { Testimonials } from './components/Sections/Testimonials';
 import Timeline from './components/Sections/Timeline';
-import LikeDemo from './components/Sections/LikeDemo';
+import ProjectShowcase from './components/Sections/LikeDemo';
 import { Contact } from './components/Sections/Contact';
 import { Footer } from './components/Layout/Footer';
 import ScrollToTop from './components/UI/ScrollToTop';
@@ -31,7 +31,7 @@ function App() {
           <Services />
           <Projects />
           <Testimonials />
-          <LikeDemo />
+          <ProjectShowcase />
           <Timeline />
           <Contact />
         </main>

@@ -5,7 +5,6 @@ import { Button } from '../UI/Button';
 import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 import { projects, categories } from '../../data/projects';
 import SearchProjects from '../UI/SearchProjects';
-import LikeButton from '../UI/LikeButton';
 import ShareButtons from '../UI/ShareButtons';
 
 export const Projects: React.FC = () => {
@@ -119,8 +118,7 @@ export const Projects: React.FC = () => {
                   ))}
                 </div>
                 
-                <div className="project-actions" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem' }}>
-                  <LikeButton projectId={project.id} initialLikes={0} />
+                <div className="project-actions" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: '1rem' }}>
                   <ShareButtons 
                     title={project.title}
                     description={project.description}

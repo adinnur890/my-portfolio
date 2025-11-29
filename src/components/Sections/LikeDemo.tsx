@@ -1,16 +1,29 @@
 import React from 'react';
-import LikeButton from '../UI/LikeButton';
+import { FaStar } from 'react-icons/fa';
 
-const LikeDemo: React.FC = () => {
+const ProjectShowcase: React.FC = () => {
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <FaStar 
+        key={i} 
+        style={{ 
+          color: i < rating ? '#ffd700' : 'rgba(255,255,255,0.3)',
+          fontSize: '1rem',
+          marginRight: '2px'
+        }} 
+      />
+    ));
+  };
+
   return (
     <section className="section" style={{ padding: '2rem 0', background: 'linear-gradient(135deg, #667eea, #764ba2)' }}>
       <div className="container">
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <h2 style={{ color: 'white', fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem' }}>
-            ❤️ Project Favorit
+            ⭐ Project Showcase
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.1rem' }}>
-            Berikan like pada project yang Anda sukai!
+            Project terbaik dengan rating tinggi!
           </p>
         </div>
 
@@ -46,7 +59,10 @@ const LikeDemo: React.FC = () => {
             <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', marginBottom: '1rem' }}>
               Platform digital komunitas teater remaja
             </p>
-            <LikeButton projectId={1} initialLikes={0} />
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}>
+              {renderStars(5)}
+              <span style={{ color: 'white', fontSize: '0.9rem', marginLeft: '0.5rem' }}>5.0</span>
+            </div>
           </div>
 
           {/* Real Project 2 */}
@@ -74,7 +90,10 @@ const LikeDemo: React.FC = () => {
             <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', marginBottom: '1rem' }}>
               Task management dengan real-time collaboration
             </p>
-            <LikeButton projectId={2} initialLikes={0} />
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}>
+              {renderStars(4)}
+              <span style={{ color: 'white', fontSize: '0.9rem', marginLeft: '0.5rem' }}>4.8</span>
+            </div>
           </div>
 
           {/* Real Project 3 */}
@@ -102,7 +121,10 @@ const LikeDemo: React.FC = () => {
             <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', marginBottom: '1rem' }}>
               Platform reservasi hotel dengan payment gateway
             </p>
-            <LikeButton projectId={4} initialLikes={0} />
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}>
+              {renderStars(5)}
+              <span style={{ color: 'white', fontSize: '0.9rem', marginLeft: '0.5rem' }}>4.9</span>
+            </div>
           </div>
         </div>
 
@@ -112,4 +134,4 @@ const LikeDemo: React.FC = () => {
   );
 };
 
-export default LikeDemo;
+export default ProjectShowcase;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FiGithub, FiLinkedin, FiTwitter, FiMail, FiDownload, FiEye } from 'react-icons/fi';
+import { FiGithub, FiLinkedin, FiTwitter, FiMail, FiDownload, FiEye, FiExternalLink } from 'react-icons/fi';
 import { SiReact, SiTypescript, SiNodedotjs, SiPython } from 'react-icons/si';
 import { Button } from '../UI/Button';
 import { personalInfo } from '../../data/personal';
