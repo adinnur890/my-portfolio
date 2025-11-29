@@ -1,7 +1,7 @@
 import React from 'react';
 import { FiHeart, FiCode, FiCoffee, FiMapPin } from 'react-icons/fi';
 import { personalInfo } from '../../data/personal';
-import VisitorCounter from '../UI/VisitorCounter';
+
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -27,7 +27,7 @@ export const Footer: React.FC = () => {
 
         {/* Visitor Counter */}
         <div style={{ textAlign: 'center' }}>
-          <VisitorCounter />
+
           <p style={{ 
             fontSize: '0.8rem', 
             fontStyle: 'italic', 
